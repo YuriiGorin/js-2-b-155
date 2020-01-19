@@ -5,6 +5,27 @@
     <title>Отрисовка списка категорий с произвольным кол-вом уровней подкатегорий</title>
     <script>
         "use strict";
+
+        const formCategoriesTree = function f(items) {
+            if (items.length === 0) return "";
+            let html = "<ul>";
+
+            for (const item of items) {
+                html += "<li>" + item.title;
+                // повторяем процесс для потомков
+                html += f(item.children);
+                html += "</li>";
+            }
+
+            html += "</ul>";
+            return html;
+        };
+
+        fetch("./categories.json")
+            .then(res => res.json())
+            .then(data => {
+                document.write(formCategoriesTree(data));
+            });
     </script>
 </head>
 <body>

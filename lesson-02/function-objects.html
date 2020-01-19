@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Функции-объекты</title>
+    <script>
+        "use strict";
+
+        alert(fn1(2,2));
+
+        // Function-declaration - функциональное объявление
+        // функциональные объявления всплывают (хоистинг)
+        function fn1(a, b) {
+            return a + b;
+        }
+
+        // fn1 = 5;
+
+        // fn2(2,2);
+
+        // Function-expression - функциональное выражение
+        const fn2 = function(a, b) {
+            return a + b;
+        };
+
+        // fn2 = 5;
+
+        console.log(fn1(5, 3) === fn2(5, 3));
+
+        console.log(fn1.name, fn2.name);
+
+        // NFE - Named Function Expression - именованное функциональное выражение
+        // fn - это внутреннее имя функции, которое не доступно за её пределами
+        const toDoSomething = function fn() {
+            if (typeof fn.counter === "undefined") {
+                fn.counter = 0;
+            }
+            fn.counter++;
+            console.log(`вызвали функцию ${fn.counter} раз`);
+        };
+
+        // скопировали ссылку на объект с функцией
+        const test = toDoSomething;
+
+        test();
+        test();
+
+        toDoSomething();
+        toDoSomething();
+        toDoSomething();
+
+        console.log(toDoSomething.counter);
+        // отображается внутреннее имя, а не имя переменной
+        console.log(test.name);
+
+        // здесь тоже NFE
+        window.addEventListener("load", function initScript() {
+            // специально вызываем ошибку
+            undefined();
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
