@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ES-модули и webpack</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{ title }}</h1>
+    <input v-model="onlyAdults" type="checkbox" id="onlyAdults">
+    <label for="onlyAdults">Только совершеннолетние</label>
+    <ul>
+        <li v-for="student in students">{{ student.name }}</li>
+    </ul>
+</div>
+<script src="dist/main.js"></script>
+</body>
+</html>

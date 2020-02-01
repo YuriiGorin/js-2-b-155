@@ -76,3 +76,10 @@ const uniqueValues2 = numbers.reduce((acc, n) => {
 }, []);
 
 console.log(uniqueValues);
+
+const arr = [[10, 5, 8], [5, 8], [10, 1, 3, 1], [1]];
+
+const flatArr = arr.reduce((acc, item) => [...acc, ...item], []);
+const flatArr2 = arr.reduce((acc, item) => (acc.push(...item), acc), []);
+
+console.log(flatArr, flatArr2);
