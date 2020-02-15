@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Замыкания (Closures)</title>
+  <script>
+    window.addEventListener("load", () => {
+        "use strict";
+        const buttons = document.querySelectorAll("button");
+
+        const handler = function(event, i) {
+            this.style.color = "red";
+            alert(this.dataset.counter);
+        };
+
+        for (let i=0; i<buttons.length; i++) {
+            buttons[i].innerHTML += " " + i;
+            buttons[i].dataset.counter = i;
+            buttons[i].addEventListener("click", handler);
+        }
+
+        // const _iteration = function(counter) {
+        //     buttons[counter].innerHTML += " " + counter;
+        //     buttons[counter].addEventListener("click", function() {
+        //         this.style.color = "red";
+        //         alert(counter);
+        //     });
+        // };
+        //
+        // for (var i=0; i<buttons.length; i++) {
+        //     _iteration(i);
+        // }
+
+
+        // for (var i=0; i<buttons.length; i++) {
+        //     buttons[i].innerHTML += " " + i;
+        //     buttons[i].addEventListener("click", function() {
+        //         this.style.color = "red";
+        //         alert(i);
+        //     });
+        // }
+
+       // i = 100600;
+
+
+        for (var j=0; j<10; j++) {
+           // setTimeout(() => alert(j), 1500*j);
+        }
+
+        const test = function() {
+          a = 200;
+          alert(a);
+        };
+
+        let a = 100;
+
+        test();
+
+        console.log(a);
+
+    });
+  </script>
+</head>
+<body>
+  <button>Кнопка</button>
+  <button>Ещё одна</button>
+  <button>И ещё одна</button>
+  <button>Тест</button>
+</body>
+</html>
