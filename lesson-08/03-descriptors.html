@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Дескрипторы свойств</title>
+  <script>
+   "use strict";
+    const user = {
+        increment() {
+            // изменить свойство уже нельзя
+           // this.age++;
+        }
+    };
+
+    Object.defineProperty(user, "age", {
+       value: 23,
+       // позволяет сделать свойство read-only (по умолчанию false)
+       writable: false,
+       // позволяет запретить уделение свойства из объекта
+       configurable: false,
+       // разрешает использовать свойство в цикле for-in,
+       // получать как результат методов Object.keys(), Object.values(), Object.entries()
+       enumerable: true,
+    });
+
+    console.log(user);
+
+    // delete user.age;
+    // user.age = 100500;
+
+
+    console.log(user.age);
+
+    // user.increment();
+    console.log(Object.keys(user));
+
+    console.log(Object.getOwnPropertyDescriptors(window));
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

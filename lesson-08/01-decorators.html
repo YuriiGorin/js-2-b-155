@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    "use strict";
+    const factorial = function fn(n) {
+      if (n <= 1) return 1;
+      for (let i=0; i<100000; i++);
+      return n * factorial(n-1);
+    };
+
+    const toDoSomethingHard = function(m = 900000) {
+      let n = "0";
+      for (let i=0; i<m; i++) {
+          let now = Date.now();
+          n += i * 2;
+          now += i;
+      }
+      return n;
+    };
+
+    const makeProfilerDecorator = function(fn, name) {
+      const label =  `profiler decorator ${name}`;
+      return function (...args) {
+          console.log(`Вызов функции ${fn.name} с аргументами `, ...args);
+          console.time(label);
+          const result = fn(...args);
+          console.timeEnd(label);
+          return result;
+      };
+    };
+
+    const factorialProfiled = makeProfilerDecorator(factorial, "расчет факториала");
+
+    factorialProfiled(100);
+    factorialProfiled(600);
+    factorialProfiled(900);
+
+    const toDoSomethingHardProfiled = makeProfilerDecorator(toDoSomethingHard, "тестовая функция");
+    toDoSomethingHardProfiled();
+    toDoSomethingHardProfiled(1600000);
+
+    console.log("--------");
+
+    const memoDecorator = function(fn) {
+      const cache = {};
+      return function(arg) {
+          if (typeof cache[arg] !== "undefined") {
+              return cache[arg];
+          }
+          cache[arg] = fn(arg);
+          return cache[arg];
+      };
+    };
+
+    const factorialCacheProfiled = makeProfilerDecorator(memoDecorator(factorial), "кешированный расчёт факториала");
+
+    factorialCacheProfiled(900);
+    factorialCacheProfiled(900);
+    factorialCacheProfiled(901);
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

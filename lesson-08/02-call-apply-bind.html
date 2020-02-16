@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Косвенный вызов функций</title>
+  <script>
+      "use strict";
+
+      const user = {
+          m: 900000,
+          toDoSomethingHard() {
+              let n = "0";
+              for (let i=0; i<this.m; i++) {
+                  let now = Date.now();
+                  n += i * 2;
+                  now += i;
+              }
+              return n;
+          },
+          printInfo(data) {
+              console.log("m", this.m, data);
+          }
+      };
+
+      const makeProfilerDecorator = function(fn, name) {
+          const label =  `profiler decorator ${name}`;
+          return function (...args) {
+              console.log(`Вызов функции ${fn.name} с аргументами `, ...args);
+              console.time(label);
+              // пробрасываем текущий контекст с помощью косвенного вызова
+              // поэтому оригинальный метод объекта может работать (если вызывать как прошлом примере: fn(..args)
+              // то контекст теряется, т.к. в вызове нет обращения к объекту)
+              const result = fn.apply(this, args);
+              console.timeEnd(label);
+              return result;
+          };
+      };
+
+
+      user.toDoSomethingHard = makeProfilerDecorator(user.toDoSomethingHard, "вызов метода объекта");
+      user.toDoSomethingHard();
+
+      const list = ["test", "something", "someone"];
+
+      list.forEach(user.printInfo.bind(user));
+      list.forEach(item => user.printInfo(item));
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>
