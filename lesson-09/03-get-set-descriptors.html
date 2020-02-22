@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Объявление геттеров и сеттеров через дескрипторы свойств</title>
+    <script>
+        "use strict";
+        const address = {
+            country: "Russia",
+            city: "Saint-Petersburg",
+            street: "Pravdy",
+            zip: 191119,
+            toString() {
+                return this.fullAddress;
+            }
+        };
+
+        Object.defineProperty(address, "fullAddress", {
+           get() {
+               return [this.city, this.street, this.country, this.zip].filter(Boolean).join(", ");
+           }
+        });
+
+
+        alert(address);
+        console.log(address.fullAddress);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

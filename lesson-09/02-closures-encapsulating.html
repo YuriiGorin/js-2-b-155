@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Геттеры и сеттеры</title>
+    <script>
+        "use strict";
+
+        const createUser = function (firstName, lastName, age = 0) {
+            const user = {
+                firstName,
+                lastName,
+                get name() {
+                  return `${this.firstName} ${this.lastName}`.trim();
+                  // return [this.firstName, this.lastName].filter(Boolean).join(" ");
+                },
+                get age() {
+                    return age;
+                },
+                set age(value) {
+                    if (!isNaN(value) && isFinite(value) && value >= 0 && value <= 120) {
+                        age = value;
+                    } else {
+                        throw new TypeError("Возраст должен быть числом в диапазоне от 0 до 120");
+                    }
+                }
+            };
+
+            user.age = age;
+            return user;
+        };
+
+
+        const john = createUser("John", "Snow", 20);
+        console.log(john);
+
+        const mary = createUser("Mary", "Smith", 30);
+
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

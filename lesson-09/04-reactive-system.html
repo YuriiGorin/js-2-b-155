@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Реактивность на базе геттеров и сеттеров</title>
+    <script>
+        "use strict";
+        const createReactiveObject = function(initialState, callback) {
+            const $data = {...initialState};
+            const state = {};
+            for (const prop of Object.keys($data)) {
+                Object.defineProperty(state, prop, {
+                   enumerable: true,
+                   get() {
+                       return $data[prop];
+                   },
+                   set(val) {
+                       $data[prop] = val;
+                       if (typeof callback === "function") {
+                           callback(prop, val);
+                       }
+                   }
+                });
+            }
+            return state;
+        };
+
+        const logChanges = function(propName, propValue) {
+            console.log(`Значение свойства ${propName} изменено на ${propValue}`);
+        };
+
+
+
+        window.addEventListener("load", () => {
+            const container = document.querySelector("#app");
+            const template = container.innerHTML;
+            let html = "";
+
+            const render = function() {
+                html = template;
+                for (const [key, value] of Object.entries(app)) {
+                    html = html.replace("{{ " + key + " }}", value);
+                }
+                container.innerHTML = html;
+            };
+
+            const app = createReactiveObject({
+                title: 'HelloWorld',
+                counter: 0,
+            }, render);
+
+            render();
+
+            setInterval(() => {
+                app.counter++;
+                if (app.counter > 10 && app.counter < 50) {
+                    app.title = "Очень много насчитали";
+                }
+
+                if (app.counter > 50) {
+                    app.title = "Ну сколько ж можно...";
+                }
+            }, 100);
+        });
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ title }}</h1>
+        Автоматический счётчик: {{ counter }}
+    </div>
+</body>
+</html>

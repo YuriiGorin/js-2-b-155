@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Геттеры и сеттеры</title>
+    <script>
+        "use strict";
+        const ageSymb = Symbol();
+
+        const user = {
+            name: "John",
+            [ageSymb]: 30,
+            // геттер - это функция, формирующая значение некоторого свойство
+            // зедсь это свойство user.age
+            get age() {
+                console.log("test");
+                return this[ageSymb];
+            },
+            // сеттер - это функция, которая автоматически вызывается при попытке присвоения значения свойству
+            // первым аргументом в неё передается ПРИСВАИВАЕМОЕ (новое) значение
+            set age(value) {
+                if (!isNaN(value) && isFinite(value) && value >= 0 && value <= 120) {
+                    this[ageSymb] = value;
+                } else {
+                    throw new TypeError("Возраст должен быть числом в диапазоне от 0 до 120");
+                }
+            }
+        };
+
+
+        console.log(user._age);
+        // при каждом обращении к геттеру происходит вызов функции
+        console.log(user.age);
+        console.log(user.age);
+        console.log(user.age);
+
+        // console.log(Object.entries(user));
+
+        for (const [key, value] of Object.entries(user)) {
+            console.log(key, '=', value);
+        }
+
+        user.age++;
+        console.log(user.age);
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
