@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Расширение прототипов встроенных объектов</title>
+    <script>
+        "use strict";
+        Array.prototype.toUpperCase = function() {
+            // this - здесь ссылка на массив, у которого будет вызван этот метод
+            return this.map(item => String(item).toUpperCase());
+        };
+
+        const list = ["first", 5, "eLSe"];
+
+        console.log(list.toUpperCase());
+
+        console.log(["test", "dAtA"].toUpperCase());
+
+        String.prototype.reverse = function() {
+            return this.split("").reverse().join("");
+        };
+
+
+        console.log("testdata".reverse());
+
+        for (let prop in list) {
+            // при переборе могут отобразиться имена свойств из прототипа
+            console.log(prop);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

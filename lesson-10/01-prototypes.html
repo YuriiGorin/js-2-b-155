@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прототипное наследование</title>
+    <script>
+        "use strict";
+        const coords = {
+            x: 100,
+            y: 200,
+            // hasOwnProperty(v) {
+            //     return 100500;
+            // }
+        };
+
+        console.log(coords.hasOwnProperty("x"));
+        console.log(coords.hasOwnProperty("hasOwnProperty"));
+
+        console.log("x" in coords);
+        console.log("hasOwnProperty" in coords);
+
+        // служебные методы в современных браузерах помечены дескриптором enumerable: false
+        // но for in всё равно может вывести имена свойств из прототипов, а не только у самого объекта
+        for (let prop in coords) {
+            if (coords.hasOwnProperty(prop)) {
+                console.log(prop);
+            }
+        }
+
+        console.log(Object.getPrototypeOf(coords));
+        console.log(coords.__proto__);
+        console.log(coords.__proto__ === Object.prototype);
+
+
+        const test = {
+            data: "...",
+            // __proto__: null,
+            // toString() {
+            //     return this.data;
+            // }
+        };
+
+        // заменяем прототип
+        Object.setPrototypeOf(test, null);
+
+        console.log(Object.getPrototypeOf(test));
+
+       // alert(test);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

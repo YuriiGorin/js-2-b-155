@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Работа с цепочкой прототипов</title>
+    <script>
+        "use strict";
+
+        const o1 = { x: 200, y: 300 };
+        const o2 = Object.create(o1);
+        o2.x = 150;
+        o2.z = 400;
+
+        const o3 = Object.create(o2);
+        o3.x = 90;
+        o3.y = 30;
+
+        const o4 = Object.create(o3);
+        o4.z = 55;
+        o4.a = 99;
+
+        const getOwnKeys = function(obj) {
+            const arr = [];
+            for (const prop in obj) {
+                arr.push(prop);
+            }
+            return arr;
+        };
+
+        console.log(getOwnKeys(o4));
+        console.log(getOwnKeys(o1));
+
+        const getValues = function(obj, key) {
+            const values = [];
+            while (obj !== null) {
+                if (obj.hasOwnProperty(key)) {
+                    values.push(obj[key]);
+                }
+
+                obj = Object.getPrototypeOf(obj);
+            }
+            return values;
+        };
+
+
+        console.log(getValues(o3, "y"));
+        console.log(getValues(o4, "x"));
+        console.log(getValues(o4, "test"));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Object.create</title>
+    <script>
+        "use strict";
+        const cat = {
+            name: "Barsik",
+            age: 2,
+            meow() {
+                console.log(`${this.name} says meeeeoww!`)
+            },
+            info() {
+                console.log(`${this.name} is ${this.age} yo.`);
+            },
+        };
+
+        cat.meow();
+        cat.info();
+
+        const cat2 = Object.create(cat);
+
+        console.log(Object.keys(cat2));
+
+        for (const prop in cat2) {
+            if (cat2.hasOwnProperty(prop)) {
+                console.log(prop);
+            }
+        }
+
+        // запись значений ВСЕГДА происходит в сам объект, а не в его прототип
+        //  т.е. теперь у cat2 есть СОБСТВЕННОЕ свойство name
+        cat2.name = "Murka";
+        cat2.color = "black";
+        // запись в прототип может производиться напрямую
+        // cat2.__proto__.age = 100500;
+
+        cat2.meow();
+        cat2.info();
+        console.log(cat2.name);
+        console.log(cat2);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
