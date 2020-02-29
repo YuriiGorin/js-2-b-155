@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Знакомство с конструкторами</title>
+    <script>
+        "use strict";
+        const Test = function() {
+            this.data = "....";
+            this.test = "something";
+        };
+
+        console.log(Test.prototype);
+
+        Test.prototype = {
+            constructor: Test,
+            showInfo() {
+              console.log(this.data, this.test);
+            },
+        };
+        // Test();
+        const obj = {};
+        Object.setPrototypeOf(obj, Test.prototype);
+        // Test.prototype.constructor.call(obj);
+        obj.__proto__.constructor.call(obj);
+        console.log(obj);
+
+        obj.showInfo();
+
+        const obj2 = new Test();
+        console.log(obj2);
+        obj2.showInfo();
+
+        console.log(obj instanceof Test);
+        console.log(obj2 instanceof Test);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

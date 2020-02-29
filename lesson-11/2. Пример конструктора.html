@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пример конструктора</title>
+    <script>
+        "use strict";
+
+        const Dog = function(name, age = 1) {
+            if (typeof name === "string" && name !== "") {
+                this.name = name;
+            } else {
+                throw new TypeError("Необходимо указать строковое имя")
+            }
+
+            if (!isNaN(age) && isFinite(age) && age > 0 && age < 15) {
+                this.age = age;
+            } else {
+                throw new TypeError("Возраст должен быть числом в диапазоне от нуля до 15");
+            }
+
+            let isAlive = true;
+            this.kill = function() {
+                if (isAlive) {
+                    isAlive = false;
+                    console.log(`${this.name} is killed!`)
+                } else {
+                    throw new Error("Что мертво, умереть не может");
+                }
+            };
+
+            Object.defineProperty(this, "isAlive", {
+               get() {
+                   return isAlive;
+               },
+               enumerable: true,
+            });
+
+            Dog._list.push(this);
+        };
+
+        Dog._list = [];
+        Dog.getAlive = function() {
+           return this._list.filter(dog => dog.isAlive);
+        };
+
+        Dog.prototype.bark = function() {
+            if (this.isAlive) {
+                console.log(`${this.name} says woooof!`);
+            } else {
+                throw new Error("Собака мертва");
+            }
+        };
+
+        try {
+            const rex = new Dog("Рекс", 5);
+            console.log(rex);
+
+            rex.bark();
+            rex.kill();
+
+            const jack = new Dog("Джек", 2);
+            console.log(jack);
+            console.log(Dog.getAlive());
+            jack.kill();
+
+            console.log(Dog.getAlive());
+
+            jack.kill();
+        } catch(err) {
+           if (err instanceof TypeError) {
+               alert("Переданы некорректные параметры");
+           } else if (err instanceof Error) {
+               alert("Во время убийства что-то пошло не так");
+           }
+           console.log(err);
+        }
+
+        alert("test");
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
