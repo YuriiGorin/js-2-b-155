@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прототипы</title>
+    <script>
+        "use strict";
+        const Pet = function(name, age) {
+            this.name = name;
+            this.age = age;
+            this.isAlive = true;
+
+            // if (Object.getPrototypeOf(this) === Pet.prototype) {
+            if (this.constructor === Pet) {
+                throw new Error("Невозможно создать абстрактного питомца!");
+            }
+        };
+
+        Pet.prototype.kill = function() {
+            if (this.isAlive) {
+                this.isAlive = false;
+                console.log(`${this.name} убит!`)
+            } else {
+                throw new Error("Уже убит");
+            }
+        };
+
+        const Cat = function(...args) {
+            Pet.apply(this, args);
+            this.isStriped = true;
+        };
+
+        Object.setPrototypeOf(Cat.prototype, Pet.prototype);
+
+        Cat.prototype.meow = function() {
+            console.log(`${this.name} говорит мяяяууу!`);
+        };
+
+        const c1 = new Cat("Барсик", 2);
+        c1.meow();
+        c1.kill();
+        console.log(c1);
+
+        console.log(c1 instanceof Cat);
+        console.log(c1 instanceof Pet);
+
+        const Dog = function(...args) {
+            Pet.apply(this, args);
+        };
+
+        Object.setPrototypeOf(Dog.prototype, Pet.prototype);
+
+        Dog.prototype.bark = function() {
+            console.log(`${this.name} говорит гааав!`);
+        };
+
+        const d1 = new Dog("Рекс", 5);
+        d1.bark();
+        d1.kill();
+
+
+        const p = new Pet();
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

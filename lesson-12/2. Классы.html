@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Классы</title>
+    <script>
+        "use strict";
+        class Pet {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+                this.isAlive = true;
+            }
+
+            kill() {
+                if (this.isAlive) {
+                    this.isAlive = false;
+                    console.log(`${this.name} убит!`)
+                } else {
+                    throw new Error("Уже убит");
+                }
+            }
+        }
+
+        class Cat extends Pet {
+            // статические свойства и методы хранятся в самой функции-конструкторе
+            // static _list = [];
+            // в будущем классы будут поддерживать приватные свойства
+            // #test = "data";
+
+            // если у дочернего класса есть свой конструктор, то родительский нужно вызывать вручную
+            // и аргументы также надо передавать самостоятельно
+            constructor(...args) {
+                super(...args);
+                this.isStriped = true;
+                // console.log(this.#test);
+                Cat._list.push(this);
+            }
+
+            meow() {
+                console.log(`${this.name} говорит мяяяууу!`);
+            }
+
+            static getAll() {
+                return this._list.filter(cat => cat.isAlive);
+            }
+        }
+
+        Cat._list = [];
+
+        console.log(Cat.prototype);
+
+        class Dog extends Pet {
+            // если у дочернего класса нет своего конструктора, то при создании объекта
+            // автоматически вызывается родительский конструктор с передачей всех аргументов ему
+            bark() {
+                console.log(`${this.name} говорит гав!`);
+            }
+        }
+
+        const c1 = new Cat("Барсик", 2);
+        c1.meow();
+        console.log(Cat.getAll());
+        c1.kill();
+        console.log(c1);
+
+        console.log(c1 instanceof Cat);
+        console.log(c1 instanceof Pet);
+
+        const d1 = new Dog("Рекс", 5);
+        d1.bark();
+        d1.kill();
+
+        const p = new Pet();
+    </script>
+</head>
+<body>
+
+</body>
+</html>
