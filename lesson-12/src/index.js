@@ -32,6 +32,8 @@ window.addEventListener("load", function () {
     example.innerHTML = table2.generate();
     table2.addRow("И напоследок", 346587);
 
+    console.log(table2.filter("8").generate());
+
     // ----------------------------------------------------------------------------
 
     const table3 = new Table({
