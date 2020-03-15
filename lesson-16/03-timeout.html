@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        "use strict";
+        window.addEventListener("load", () => {
+            const syncBtn = document.querySelector("#sync");
+            const asyncBtn = document.querySelector("#async");
+
+            syncBtn.addEventListener("click", () => {
+                for (let i=0; i<20000; i++) {
+                    let n = i / 2 * 100;
+                    console.log(n);
+                }
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+                console.log("-------------------------------------");
+            });
+
+            asyncBtn.addEventListener("click", () => {
+               const iteration = function(i) {
+                   let n = i / 2 * 100;
+                   console.log(n);
+                   if (i < 20000) {
+                       setTimeout(() => iteration(i + 1), 0);
+                   }
+               };
+
+               setTimeout(() => iteration(0), 0)
+            });
+        });
+    </script>
+    <style>
+        #block {
+            width: 100px;
+            height: 100px;
+            margin: 15px;
+            background: #111;
+            animation: 1s blockAnimation infinite;
+        }
+
+        @keyframes blockAnimation {
+            to {
+                border-radius: 50%;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <button id="sync">Синхронный расчёт</button>
+    <button id="async">Асинхронный расчёт</button>
+    <div id="block"></div>
+</body>
+</html>
