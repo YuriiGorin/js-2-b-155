@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров</title>
+    <script>
+        "use strict";
+
+        window.addEventListener("load", () => {
+            const itemsList = document.querySelector("#items");
+            let productsIsLoaded = false;
+            let currenciesIsLoaded = false;
+            let products = [];
+            let currencies = null;
+
+            const displayPrices = function() {
+                products.forEach(product => {
+                    let {id, currency, price} = product;
+                    let total = price;
+                    if (currency !== "RUR") {
+                        total = price * currencies.Valute[currency].Value;
+                    }
+
+                    const item = itemsList.querySelector(`[data-id="${id}"]`);
+                    item.innerHTML += `(цена: ${total.toFixed(0)} руб.)`
+                });
+            };
+
+            const productsXHR = new XMLHttpRequest();
+            productsXHR.open("GET", "./products.json");
+            productsXHR.send();
+
+            const currencyXHR = new XMLHttpRequest();
+            currencyXHR.open("GET", "https://www.cbr-xml-daily.ru/daily_json.js");
+            currencyXHR.send();
+
+            productsXHR.addEventListener("load", () => {
+                if (productsXHR.status === 200) {
+                    productsIsLoaded = true;
+                    products = JSON.parse(productsXHR.responseText);
+                    products.forEach(product => {
+                        const li = document.createElement("LI");
+                        li.innerHTML = product.title;
+                        li.setAttribute("data-id", product.id);
+                        itemsList.appendChild(li);
+                    });
+
+                    if (currenciesIsLoaded) {
+                        displayPrices();
+                    }
+
+                    {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("GET", "./favorites.json");
+                        xhr.send();
+
+                        xhr.addEventListener("load", () => {
+                            if (xhr.status === 200) {
+                                const data = JSON.parse(xhr.responseText);
+                                data.forEach(id => {
+                                   const item = itemsList.querySelector(`[data-id="${id}"]`);
+                                   item.style.color = "red";
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+
+            currencyXHR.addEventListener("load", (data) => {
+                if (currencyXHR.status === 200) {
+                    currenciesIsLoaded = true;
+                    currencies = JSON.parse(currencyXHR.responseText);
+                    if (productsIsLoaded) {
+                        displayPrices();
+                    }
+                }
+            });
+            console.log("test");
+        });
+    </script>
+</head>
+<body>
+    <ul id="items">
+
+    </ul>
+</body>
+</html>
