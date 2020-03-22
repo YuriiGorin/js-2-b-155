@@ -1,0 +1,6 @@
+[
+    { "id": 1, "title": "Item 1", "price": 900, "currency": "RUR" },
+    { "id": 5, "title": "Item 2", "price": 100, "currency": "USD" },
+    { "id": 7, "title": "Item 3", "price": 250, "currency": "EUR" },
+    { "id": 15, "title": "Something else", "price": 99, "currency": "USD" }
+]
