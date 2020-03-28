@@ -1,0 +1,6 @@
+.btn {
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+}
