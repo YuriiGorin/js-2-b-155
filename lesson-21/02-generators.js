@@ -16,6 +16,11 @@ function* generator() {
     console.log("Последний вызов функции");
 }
 
+
+console.log(generator().next());
+console.log(generator().next());
+console.log(generator().next());
+
 console.log(generator);
 
 
