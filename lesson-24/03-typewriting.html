@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        "use strict";
+        window.addEventListener("load", () => {
+           const text = "This is a text";
+           for (const char of text) {
+               setTimeout(() => {
+                   document.body.innerHTML += char;
+               }, 1900 * Math.random());
+           }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
