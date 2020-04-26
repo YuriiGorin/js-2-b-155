@@ -1,0 +1,25 @@
+.tableBorder() {
+  border: 1px solid darken(@color-primary, 40%);
+}
+
+table {
+  .tableBorder();
+  border-collapse: collapse;
+
+  td {
+    .tableBorder();
+    padding: 10px 15px;
+  }
+
+  tr {
+    background: #efefef;
+
+    &:nth-child(odd) {
+      background: #ccc;
+    }
+
+    &:hover {
+      background: #ff0;
+    }
+  }
+}

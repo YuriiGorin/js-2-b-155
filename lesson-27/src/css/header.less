@@ -1,0 +1,19 @@
+.header {
+  background: @color-primary;
+  .testMixin(10px, 20px);
+  transform: translate(10px) scale(1.2);
+  display: grid;
+
+  a {
+    color: #fff;
+    transition: 0.5s;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__logo {
+    background: darken(@color-primary, 25%);
+  }
+}
